@@ -35,6 +35,32 @@ cd Videx
 You need to set up `.env` files for both the frontend and backend. 
 *(Note: Do not commit `.env` files to GitHub!)*
 
+# Instruction:
+<h4>🔑 How to Get Configuration Credentials </h4>
+<p> To get your Cloudinary cloud profile configurations for both frontend and backend signatures:</p>
+<ul>
+<li>Visit Cloudinary Website and click on Sign Up for Free or Login.</li>
+<li>Once logged in and inside your main dashboard console, look at the Product Environment Credentials card right on the home interface.</li>
+<li>Copy the following variables and put them inside your backend .env and frontend .env </li>
+<li>Cloud Name: (Maps to CLOUDINARY_CLOUD_NAME on backend and NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME on frontend).</li>
+<li>API Key: (Maps to CLOUDINARY_API_KEY).</li>
+<li> API Secret: (Maps to CLOUDINARY_API_SECRET).</li>
+<li>Optional Optimization: Go to Settings -> Upload Settings and verify your unsigned/signed presets if you plan to configure manual unsigned fallback profiles.</li>
+</ul>
+
+<h4>🔑 MiMo V2.5 API Key (OpenCode AI Engine)</h4>
+<p>To connect the backend automation worker to the multi-modal video breakdown nodes via the OpenCode gateway:</p>
+<ul>
+<li>Navigate directly to OpenCode AI and register an account or sign in via Google/GitHub.</li>
+<li>Go to your user profile settings dashboard or look for the API Keys / Tokens panel from the main sidebar.</li>
+<li> Click on Create New Secret Key, assign a descriptive name (e.g., Videx-Dev-Key), and click Generate.</li>
+<li>Copy the token immediately (it will look like sk-...) and save it to your backend .env file under MIMO_API_KEY.</li>
+<li> Ensure your endpoint targets point to the standardized completions path as defined below:</li>
+<li> URL: https://opencode.ai/zen/v1/chat/completions </li>
+<li> Model Identifier: mimo-v2.5-free </li>
+</ul>
+
+
 **Backend (`videx-backend/.env`)**
 Create a `.env` file in the `videx-backend` directory with the following variables:
 ```env
