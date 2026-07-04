@@ -1,4 +1,4 @@
-# Videx — AI Video Reverse-Engineer
+# Videx — AI Video Reverse-Engineer (Free)
 
 > [!NOTE]
 > **What is Videx?**
