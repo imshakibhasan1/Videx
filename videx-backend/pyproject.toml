@@ -1,0 +1,85 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "videx-backend"
+version = "1.0.0"
+description = "VIDEX — AI-Powered Video Reverse-Engineering Platform Backend"
+requires-python = ">=3.12"
+dependencies = [
+    # Web Framework
+    "fastapi[standard]>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+
+    # Database
+    "sqlalchemy[asyncio]>=2.0.36",
+    "asyncpg>=0.30.0",
+    "alembic>=1.14.0",
+
+    # Settings & Validation
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.6.0",
+
+    # Authentication
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+
+    # HTTP Client (for MiMo API)
+    "httpx>=0.28.0",
+
+    # Cloudinary
+    "cloudinary>=1.41.0",
+
+    # Task Queue
+    "celery[redis]>=5.4.0",
+    "redis>=5.2.0",
+
+    # Rate Limiting
+    "slowapi>=0.1.9",
+
+    # Utilities
+    "python-multipart>=0.0.18",
+    "python-dotenv>=1.0.1",
+    "tenacity>=9.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+    "httpx>=0.28.0",
+    "anyio>=4.7.0",
+    "factory-boy>=3.3.0",
+    "ruff>=0.8.0",
+    "mypy>=1.13.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+env = [
+    "DATABASE_URL=postgresql+asyncpg://user:pass@localhost:5432/videx_test",
+    "SECRET_KEY=test_secret_key_for_pytest_only",
+    "CLOUDINARY_CLOUD_NAME=test",
+    "CLOUDINARY_API_KEY=test",
+    "CLOUDINARY_API_SECRET=test",
+    "MIMO_API_KEY=test",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "N", "UP", "B", "A", "C4", "PT"]
+ignore = ["B008", "A003"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true

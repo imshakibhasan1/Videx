@@ -1,0 +1,27 @@
+Step 1: Start Docker Desktop
+Before running any backend commands, make sure Docker Desktop is open and running in your system tray (the little whale icon in your taskbar).
+
+Step 2: Start the Backend (Database, Redis, API, Worker)
+Open a terminal (PowerShell or Command Prompt) and run:
+
+powershell
+# Go into the backend docker folder
+cd videx-backend\docker
+# Start all backend services in the background
+docker compose up -d
+(Note: Because we use the -d flag, it will start in the background and you can close this terminal window if you want.)
+
+Step 3: Start the Frontend (UI)
+Open a new terminal window and run:
+
+powershell
+# Go into the frontend folder
+cd videx-frontend
+# Start the Next.js development server
+npm run dev
+(Leave this terminal window open! If you close it, the frontend will stop working.)
+
+Step 4: Open in Browser
+Once both are running, open your browser and go to: 👉 http://localhost:3000
+
+That's it! You're ready to use Videx.

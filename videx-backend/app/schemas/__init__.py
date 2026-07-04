@@ -1,0 +1,1 @@
+"""VIDEX Schemas package."""

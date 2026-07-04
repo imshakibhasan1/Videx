@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * ═══════════════════════════════════════════════════════════════════
+ * VIDEX — Antigravity Design System Global Styles
+ * ═══════════════════════════════════════════════════════════════════
+ */
+
+@layer base {
+  :root {
+    /* Antigravity physics constants (CSS custom properties) */
+    --ag-float-distance: 8px;
+    --ag-float-duration: 4s;
+    --ag-transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ag-transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    --ag-glow-radius: 60px;
+    --ag-blur-surface: 12px;
+    --ag-blur-overlay: 24px;
+
+    /* Gradient anchors */
+    --gradient-brand: linear-gradient(135deg, #7c3aed 0%, #3b82f6 50%, #06b6d4 100%);
+    --gradient-accent: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    --gradient-surface: linear-gradient(180deg, rgba(22,22,38,1) 0%, rgba(15,15,25,1) 100%);
+    --gradient-shimmer: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.03) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  /* ── Dark mode body ──────────────────────────────────────────────── */
+  html {
+    @apply antialiased;
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-surface text-white;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Custom selection color ──────────────────────────────────────── */
+  ::selection {
+    background-color: rgba(124, 58, 237, 0.3);
+    color: white;
+  }
+
+  /* ── Scrollbar styling ───────────────────────────────────────────── */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@layer components {
+  /* ── Glass Card ───────────────────────────────────────────────────── */
+  .glass-card {
+    @apply relative overflow-hidden rounded-2xl border border-border-subtle
+           bg-surface-glass backdrop-blur-xl shadow-float-md;
+  }
+  .glass-card::before {
+    content: "";
+    @apply absolute inset-0 rounded-2xl;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(255, 255, 255, 0) 60%
+    );
+    pointer-events: none;
+  }
+
+  /* ── Glass Card Hover ──────────────────────────────────────────── */
+  .glass-card-interactive {
+    @apply glass-card transition-all duration-400 ease-out-expo cursor-pointer;
+  }
+  .glass-card-interactive:hover {
+    @apply border-border-bright shadow-float-lg bg-surface-glass-hover;
+    transform: translateY(-4px);
+  }
+
+  /* ── Gradient Text ───────────────────────────────────────────────── */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-brand);
+  }
+  .gradient-text-accent {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-accent);
+  }
+
+  /* ── Glow Button ──────────────────────────────────────────────────── */
+  .btn-glow {
+    @apply relative inline-flex items-center justify-center gap-2
+           rounded-full px-6 py-3 font-semibold text-white
+           bg-videx-500 transition-all duration-300 ease-out-expo
+           hover:bg-videx-400 hover:shadow-glow-purple
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-glow::after {
+    content: "";
+    @apply absolute inset-0 rounded-full opacity-0 transition-opacity duration-300;
+    background: var(--gradient-brand);
+    filter: blur(20px);
+    z-index: -1;
+  }
+  .btn-glow:hover::after {
+    opacity: 0.4;
+  }
+
+  /* ── Ghost Button ─────────────────────────────────────────────────── */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-full px-5 py-2.5 font-medium text-white/70
+           border border-border-subtle backdrop-blur-sm
+           transition-all duration-300 ease-out-expo
+           hover:text-white hover:border-border-bright hover:bg-surface-glass-hover
+           active:scale-95;
+  }
+
+  /* ── Shimmer Loading Skeleton ──────────────────────────────────────── */
+  .shimmer {
+    @apply relative overflow-hidden;
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .shimmer::after {
+    content: "";
+    @apply absolute inset-0 animate-shimmer;
+    background: var(--gradient-shimmer);
+    background-size: 200% 100%;
+  }
+
+  /* ── Floating Chip Base ────────────────────────────────────────────── */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-4 py-2
+           text-sm font-medium text-white/70 border border-border-subtle
+           bg-surface-glass backdrop-blur-sm cursor-pointer
+           transition-all duration-300 ease-spring select-none;
+  }
+  .chip:hover {
+    @apply text-white border-border-bright bg-surface-glass-hover;
+    transform: translateY(-3px) scale(1.03);
+  }
+  .chip.active {
+    @apply text-white border-videx-400/40 bg-videx-500/20 shadow-glow-purple;
+  }
+
+  /* ── Section Container ─────────────────────────────────────────────── */
+  .section-container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@layer utilities {
+  /* ── Float animation delay utilities ─────────────────────────────── */
+  .float-delay-100 { animation-delay: 0.1s; }
+  .float-delay-200 { animation-delay: 0.2s; }
+  .float-delay-300 { animation-delay: 0.3s; }
+  .float-delay-500 { animation-delay: 0.5s; }
+  .float-delay-700 { animation-delay: 0.7s; }
+  .float-delay-1000 { animation-delay: 1s; }
+
+  /* ── Gradient border utility ─────────────────────────────────────── */
+  .border-gradient {
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    background-origin: border-box;
+  }
+
+  /* ── Text balance for headings ──────────────────────────────────── */
+  .text-balance {
+    text-wrap: balance;
+  }
+}
